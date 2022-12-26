@@ -38,6 +38,8 @@ let defaultRainHeight = 15;
 
 let maximumRainCount = 500;
 
+let maximumRainInitializationInOneFrame = 5;
+
 let fps = 60; // frame per second
 
 let gameLoop = () => {
@@ -50,7 +52,20 @@ let show = () => {
 };
 
 let update = () => {
-
+  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+  let rainInitCountInOneFrame = 0;
+  while (allRains.length < maximumRainCount && 
+    maximumRainInitializationInOneFrame > rainInitCountInOneFrame) {
+      let distanceFromCam = Math.random()
+      let rain = new Rain(
+        defaultRainWidth * (2 - distanceFromCam),
+        defaultRainHeight * (2 - distanceFromCam),
+        (Math.random()/20,
+        Math.random() * canvas.width,
+        -50, (2 - distanceFromCam) * 10,
+        "rgba(197,55,230," + (1 - distanceFromCam) + ")")
+      )
+    } 
 };
 
 let draw = () => {
