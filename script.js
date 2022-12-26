@@ -18,16 +18,15 @@ class Rain {
     canvasContext.rotate(-this.direction);
     canvasContext.fillStyle = this.color;
     canvasContext.fillRect(this.posX, this.posY, this.width, this.height);
-    canvasContext.rotate(this.direction);
+    canvasContext.rotate(+this.direction);
   }
 }
 
 let canvas = document.getElementById("canvas");
-
 let canvasContext = canvas.getContext("2d");
 
 let createRect = (x, y, width, height, color) => {
-  canvas.Context.fillStyle = color;
+  canvasContext.fillStyle = color;
   canvasContext.fillRect(x, y, width, height);
 };
 
@@ -47,8 +46,8 @@ let gameLoop = () => {
 };
 
 let show = () => {
-  update()
-  draw()
+  update();
+  draw();
 };
 
 let update = () => {
@@ -60,16 +59,28 @@ let update = () => {
       let rain = new Rain(
         defaultRainWidth * (2 - distanceFromCam),
         defaultRainHeight * (2 - distanceFromCam),
-        (Math.random()/20,
+        (Math.random()/20),
         Math.random() * canvas.width,
         -50, (2 - distanceFromCam) * 10,
-        "rgba(197,55,230," + (1 - distanceFromCam) + ")")
+        "rgba(197,55,230," + (1 - distanceFromCam) + ")"
       )
-    } 
+
+      allRains.push(rain);
+      rainInitCountInOneFrame++;
+    }
+  for (let i = 0; i < allRains.length; i++) {
+    allRains[i].move();
+    if (allRains[i].posY > canvas.height ||
+      allRains[i].posX > canvas.width) {
+        allRains.splice(i, 1);
+      }
+  }
 };
 
 let draw = () => {
-
+  allRains.forEach(rain => {
+    rain.draw()
+  });
 };
 
 gameLoop();
