@@ -20,7 +20,7 @@ class Rain {
     canvasContext.fillRect(this.posX, this.posY, this.width, this.height);
     canvasContext.rotate(+this.direction);
   }
-}
+};
 
 let canvas = document.getElementById("canvas");
 let canvasContext = canvas.getContext("2d");
@@ -33,11 +33,12 @@ let createRect = (x, y, width, height, color) => {
 let allRains = [];
 
 let defaultRainWidth = 2;
+
 let defaultRainHeight = 15;
 
-let maximumRainCount = 10000;
+let maximumRainCount = 2000;
 
-let maximumRainInitializationInOneFrame = 20;
+let maximumRainInitializationInOneFrame = 40;
 
 let fps = 60; // frame per second
 
@@ -61,7 +62,7 @@ let update = () => {
         defaultRainHeight * (2 - distanceFromCam),
         (Math.random()/20),
         Math.random() * canvas.width,
-        -50, (2 - distanceFromCam) * 5, // change the speed
+        -50, (2 - distanceFromCam) * 10, // change the speed
         "rgba(197,55,230," + (1 - distanceFromCam) + ")"
       )
 
@@ -85,4 +86,3 @@ let draw = () => {
 };
 
 gameLoop();
-
