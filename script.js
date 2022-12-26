@@ -35,9 +35,9 @@ let allRains = [];
 let defaultRainWidth = 2;
 let defaultRainHeight = 15;
 
-let maximumRainCount = 500;
+let maximumRainCount = 10000;
 
-let maximumRainInitializationInOneFrame = 5;
+let maximumRainInitializationInOneFrame = 20;
 
 let fps = 60; // frame per second
 
@@ -61,13 +61,14 @@ let update = () => {
         defaultRainHeight * (2 - distanceFromCam),
         (Math.random()/20),
         Math.random() * canvas.width,
-        -50, (2 - distanceFromCam) * 10,
+        -50, (2 - distanceFromCam) * 5, // change the speed
         "rgba(197,55,230," + (1 - distanceFromCam) + ")"
       )
 
       allRains.push(rain);
       rainInitCountInOneFrame++;
     }
+    
   for (let i = 0; i < allRains.length; i++) {
     allRains[i].move();
     if (allRains[i].posY > canvas.height ||
