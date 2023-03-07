@@ -10,8 +10,8 @@ class Rain {
   }
 
   move() {
-    this.posX += Math.sin(this.direction * Math.PI/2) * this.speed;
-    this.posY += Math.cos(this.direction * Math.PI/2) * this.speed;
+    this.posX += Math.sin((this.direction * Math.PI) / 2) * this.speed;
+    this.posY += Math.cos((this.direction * Math.PI) / 2) * this.speed;
   }
 
   draw() {
@@ -20,7 +20,7 @@ class Rain {
     canvasContext.fillRect(this.posX, this.posY, this.width, this.height);
     canvasContext.rotate(+this.direction);
   }
-};
+}
 
 let canvas = document.getElementById("canvas");
 let canvasContext = canvas.getContext("2d");
@@ -43,7 +43,7 @@ let maximumRainInitializationInOneFrame = 40;
 let fps = 60; // frame per second
 
 let gameLoop = () => {
-  setInterval(show, 1000/fps);
+  setInterval(show, 1000 / fps);
 };
 
 let show = () => {
@@ -54,34 +54,36 @@ let show = () => {
 let update = () => {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
   let rainInitCountInOneFrame = 0;
-  while (allRains.length < maximumRainCount && 
-    maximumRainInitializationInOneFrame > rainInitCountInOneFrame) {
-      let distanceFromCam = Math.random()
-      let rain = new Rain(
-        defaultRainWidth * (2 - distanceFromCam),
-        defaultRainHeight * (2 - distanceFromCam),
-        (Math.random()/20),
-        Math.random() * canvas.width,
-        -50, (2 - distanceFromCam) * 10, // change the speed
-        "rgba(197,55,230," + (1 - distanceFromCam) + ")"
-      )
+  while (
+    allRains.length < maximumRainCount &&
+    maximumRainInitializationInOneFrame > rainInitCountInOneFrame
+  ) {
+    let distanceFromCam = Math.random();
+    let rain = new Rain(
+      defaultRainWidth * (2 - distanceFromCam),
+      defaultRainHeight * (2 - distanceFromCam),
+      Math.random() / 20,
+      Math.random() * canvas.width,
+      -50,
+      (2 - distanceFromCam) * 10, // change the speed
+      "rgba(197,55,230," + (1 - distanceFromCam) + ")"
+    );
 
-      allRains.push(rain);
-      rainInitCountInOneFrame++;
-    }
-    
+    allRains.push(rain);
+    rainInitCountInOneFrame++;
+  }
+
   for (let i = 0; i < allRains.length; i++) {
     allRains[i].move();
-    if (allRains[i].posY > canvas.height ||
-      allRains[i].posX > canvas.width) {
-        allRains.splice(i, 1);
-      }
+    if (allRains[i].posY > canvas.height || allRains[i].posX > canvas.width) {
+      allRains.splice(i, 1);
+    }
   }
 };
 
 let draw = () => {
-  allRains.forEach(rain => {
-    rain.draw()
+  allRains.forEach((rain) => {
+    rain.draw();
   });
 };
 
